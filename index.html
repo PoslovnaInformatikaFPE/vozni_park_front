@@ -33,22 +33,52 @@
             </div>
         </div>
 
+        <div class="button-wrapper">
+            <button class="add-button" data-bs-toggle="modal" data-bs-target="#exampleModal">Dodaj vozilo</button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Dodaj vozilo</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control" placeholder="Marka" aria-label="Marka" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Model" aria-label="Model" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Registracija" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Datum registracije" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Godište" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Gorivo" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="Status" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Odbaci</button>
+                            <button type="button" class="btn btn-primary">Sačuvaj</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="w3-container">
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">R.br.</th>
-                        <th scope="col">Tip</th>
                         <th scope="col">Marka</th>
                         <th scope="col">Model</th>
                         <th scope="col">Reg.</th>
-                        <th scope="col">Kubikaza</th>
+                        <th scope="col">Istek reg.</th>
+                        <th scope="col">Godište</th>
+                        <th scope="col">Gorivo</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Izmjeni</th>
                         <th scope="col">Izbriši</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    
+
                 </tbody>
             </table>
         </div>

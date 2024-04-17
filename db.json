@@ -2,27 +2,33 @@
   "vozila": [
     {
       "id": 1,
-      "tip": "limuzina",
       "marka": "vw",
       "model": "golf",
-      "registracija": "100-B-111",
-      "kubikaza": 2500
+      "registracijski_broj": "100-B-111",
+      "datum_isteka_registracije": "12.12.2024.",
+      "godina_proizvodnje": 2012,
+      "tip_goriva": "dizel",
+      "status": "izdato"
     },
     {
       "id": 2,
-      "tip": "limuzina",
       "marka": "audi",
-      "model": "A4",
-      "registracija": "122-B-111",
-      "kubikaza": 2500
+      "model": "a4",
+      "registracijski_broj": "111-B-131",
+      "datum_isteka_registracije": "12.04.2024.",
+      "godina_proizvodnje": 2020,
+      "tip_goriva": "benzin",
+      "status": "slobodno"
     },
     {
       "id": 3,
-      "tip": "karavan",
       "marka": "mercedes",
-      "model": "C200",
-      "registracija": "111-B-333",
-      "kubikaza": 2500
+      "model": "c200",
+      "registracijski_broj": "555-B-222",
+      "datum_isteka_registracije": "12.10.2024.",
+      "godina_proizvodnje": 2019,
+      "tip_goriva": "dizel",
+      "status": "slobodno"
     }
   ]
 }
