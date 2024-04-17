@@ -29,6 +29,16 @@
       "godina_proizvodnje": 2019,
       "tip_goriva": "dizel",
       "status": "slobodno"
+    },
+    {
+      "marka": "Opel",
+      "model": "Insignia",
+      "registracijski_broj": "111-A-222",
+      "datum_isteka_registracije": "12.12.2024",
+      "godina_proizvodnje": "2008",
+      "tip_goriva": "Dizel",
+      "status": "Slobodno",
+      "id": 4
     }
   ]
 }
