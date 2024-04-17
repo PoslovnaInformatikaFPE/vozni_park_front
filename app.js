@@ -19,21 +19,20 @@ async function getVozila() {
     try {
         // kreiramo red u tabeli
         let row
-
         const response = await fetch("http://localhost:4000/vozila")
         const data = await response.json() // niz iz baze
-
-        console.log("moje data je:", data);
 
         data.forEach((vozilo) => {
             row = `
             <tr>
                 <td>${vozilo?.id}</td>
-                <td>${vozilo?.tip}</td>
                 <td>${vozilo?.marka}</td>
                 <td>${vozilo?.model}</td>
-                <td>${vozilo?.registracija}</td>
-                <td>${vozilo?.kubikaza}</td>
+                <td>${vozilo?.registracijski_broj}</td>
+                <td>${vozilo?.datum_isteka_registracije}</td>
+                <td>${vozilo?.godina_proizvodnje}</td>
+                <td>${vozilo?.tip_goriva}</td>
+                <td>${vozilo?.status}</td>
                 <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-pencil" viewBox="0 0 16 16">
                         <path
