@@ -76,3 +76,48 @@ async function deleteVozilo(voziloId) {
 }
 
 getVozila()
+
+async function insertVozilo() {
+
+    // kreiramo objekat vozilo koji šaljemo na api ili backend
+    // atributi imaju isti naziv kao u pydantic šemi na backendu
+    // vrijednosti kupimo iz input polja koje selektujemo preko id-a
+
+    const vozilo = {
+        marka: document.getElementById("marka").value,
+        model: document.getElementById("model").value,
+        registracijski_broj: document.getElementById("registracija").value,
+        datum_isteka_registracije: document.getElementById("datumRegistracije").value,
+        godina_proizvodnje: document.getElementById("godiste").value,
+        tip_goriva: document.getElementById("gorivo").value,
+        status: document.getElementById("status").value
+    }
+
+    // console.log("Naš objekat koji šaljemo na backend je:", vozilo)
+
+    try {
+        // pokušavamo da pošaljemo podatke na server i upišemo u bazu pomoću fetcha
+        const response = await fetch("http://localhost:4000/vozila", {
+            method: "POST", // metoda post je za slanje podataka tj. upis
+            body: JSON.stringify(vozilo), // u body ide objekat koji šaljemo apiju tj vozilo
+            headers: {
+                "Content-type": "application/json" // tip podatka
+            }
+        })
+
+        if(!response.ok){ // provjeravamo da li nije upisan podatak u bazu
+            throw  new Error("Podaci nisu upisani u bazu!") // ako nije bacamo grešku
+        }
+
+        getVozila() // ponovo povlačimo sva vozila iz baze da vidimo i ovo novoupisano
+    } catch (err) { // hvatamo grešku
+        document.getElementById("greskaUpisa").innerHTML = err?.message
+    }
+
+
+
+}
+
+// TODO: očistiti input polja ako korisnik ne sačuva vozilo, takođe ukloniti grešku
+// TODO: validacija na input polja
+// TODO: disable dugmeta na upis
