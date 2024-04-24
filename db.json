@@ -1,14 +1,14 @@
 {
   "vozila": [
     {
-      "id": 1,
-      "marka": "vw",
+      "marka": "vwwwww",
       "model": "golf",
       "registracijski_broj": "100-B-111",
       "datum_isteka_registracije": "12.12.2024.",
-      "godina_proizvodnje": 2012,
+      "godina_proizvodnje": "2012",
       "tip_goriva": "dizel",
-      "status": "izdato"
+      "status": "izdato",
+      "id": 1
     },
     {
       "id": 2,
@@ -39,6 +39,36 @@
       "tip_goriva": "Dizel",
       "status": "Slobodno",
       "id": 4
+    },
+    {
+      "marka": "volvo",
+      "model": "s90",
+      "registracijski_broj": "000-1111",
+      "datum_isteka_registracije": "10.10.2010.",
+      "godina_proizvodnje": "2010",
+      "tip_goriva": "dizel",
+      "status": "zauzeto",
+      "id": 5
+    },
+    {
+      "marka": "dacia",
+      "model": "sandero",
+      "registracijski_broj": "999-1211",
+      "datum_isteka_registracije": "9.9.2024.",
+      "godina_proizvodnje": "2015",
+      "tip_goriva": "dizel",
+      "status": "slobodno",
+      "id": 6
+    },
+    {
+      "marka": "audi",
+      "model": "a99",
+      "registracijski_broj": "23'4i849",
+      "datum_isteka_registracije": "lsadjfasildfjoi",
+      "godina_proizvodnje": "190234038asdf",
+      "tip_goriva": "oiwejrioqwe2",
+      "status": "23049801238421",
+      "id": 7
     }
   ]
 }

@@ -42,6 +42,10 @@ th{
     margin: 10px 0;
 }
 
-#greskaUpisa{
+#greskaUpisa, #greskaUpisaUpdate{
     color: red
+}
+
+.bi-pencil:hover{
+    cursor: pointer;
 }

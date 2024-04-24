@@ -11,16 +11,17 @@ function w3_close() {
 }
 
 async function getVozila() {
+    // popunjavanje tabele
 
     // selektuje table body iz html-a
     let tableBody = document.getElementById("tableBody")
-    tableBody.innerHTML = null
+    tableBody.innerHTML = null // čisti tabelu prije popunjavanja 
 
     try {
         // kreiramo red u tabeli
         let row
         const response = await fetch("http://localhost:4000/vozila")
-        const data = await response.json() // niz iz baze
+        const data = await response.json() // niz svih vozila iz baze
 
         data.forEach((vozilo) => {
             row = `
@@ -34,7 +35,10 @@ async function getVozila() {
                 <td>${vozilo?.tip_goriva}</td>
                 <td>${vozilo?.status}</td>
                 <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-pencil" viewBox="0 0 16 16">
+                        class="bi bi-pencil" 
+                        viewBox="0 0 16 16"
+                        onClick="openUpdateModal(${vozilo?.id})"
+                        >
                         <path
                             d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
                     </svg></td>
@@ -93,6 +97,8 @@ async function insertVozilo() {
         status: document.getElementById("status").value
     }
 
+
+    console.log("OBJEKAT", vozilo);
     // console.log("Naš objekat koji šaljemo na backend je:", vozilo)
 
     try {
@@ -105,8 +111,8 @@ async function insertVozilo() {
             }
         })
 
-        if(!response.ok){ // provjeravamo da li nije upisan podatak u bazu
-            throw  new Error("Podaci nisu upisani u bazu!") // ako nije bacamo grešku
+        if (!response.ok) { // provjeravamo da li nije upisan podatak u bazu
+            throw new Error("Podaci nisu upisani u bazu!") // ako nije bacamo grešku
         }
 
         getVozila() // ponovo povlačimo sva vozila iz baze da vidimo i ovo novoupisano
@@ -114,8 +120,78 @@ async function insertVozilo() {
         document.getElementById("greskaUpisa").innerHTML = err?.message
     }
 
+}
 
+let idSelektovanogVozila = null
 
+const openUpdateModal = async (idVozila) => {
+    // openUpdateModal funkcija otvara modal i popunjava ga sa podacima odabranog vozila
+
+    idSelektovanogVozila = idVozila
+
+    var myModal = new bootstrap.Modal(document.getElementById('updateModal'), {
+        keyboard: false
+    }) // selektujemo update modal iz DOM-a
+
+    myModal.show()
+
+    try {
+        // fetchujemo podatke za vozilo na koje kliknemo upate
+        const response = await fetch(`http://localhost:4000/vozila/${idVozila}`)
+
+        if (!response.ok) { // provjeravamo da li nije upisan podatak u bazu
+            throw new Error("Ne možemo da dobijemo podatke!") // ako nije bacamo grešku
+        }
+
+        const data = await response.json()
+
+        // linije ispod popunjavaju input boxove u update modalu
+        document.getElementById("markaUpdate").value = data?.marka
+        document.getElementById("modelUpdate").value = data?.model
+        document.getElementById("registracijaUpdate").value = data?.registracijski_broj
+        document.getElementById("datumRegistracijeUpdate").value = data?.datum_isteka_registracije
+        document.getElementById("godisteUpdate").value = data?.godina_proizvodnje
+        document.getElementById("gorivoUpdate").value = data?.tip_goriva
+        document.getElementById("statusUpdate").value = data?.status
+    } catch (err) {
+        document.getElementById("greskaUpisaUpdate").innerHTML = err?.message
+    }
+
+}
+
+const updateVozilo = async () => {
+    // updateujemo postojeće vozilo
+
+    // kreiramo veliki objekat koji šaljemo na server
+    const vozilo = {
+        // isti nazivi atributa kao na backendu
+        marka: document.getElementById("markaUpdate").value,
+        model: document.getElementById("modelUpdate").value,
+        registracijski_broj: document.getElementById("registracijaUpdate").value,
+        datum_isteka_registracije: document.getElementById("datumRegistracijeUpdate").value,
+        godina_proizvodnje: document.getElementById("godisteUpdate").value,
+        tip_goriva: document.getElementById("gorivoUpdate").value,
+        status: document.getElementById("statusUpdate").value
+    }
+
+    try {
+        // pokušavamo da pošaljemo podatke na server i izmjenimo u bazi pomoću fetcha
+        const response = await fetch(`http://localhost:4000/vozila/${idSelektovanogVozila}`, {
+            method: "PUT", // metoda put je za update podataka 
+            body: JSON.stringify(vozilo), // u body ide objekat koji šaljemo apiju tj vozilo
+            headers: {
+                "Content-type": "application/json" // tip podatka
+            }
+        })
+
+        if (!response.ok) { // provjeravamo da li nije izmjenjen podatak u bazu
+            throw new Error("Podaci nisu imjenjeni u bazi!") // ako nije bacamo grešku
+        }
+
+        getVozila() // ponovo povlačimo sva vozila iz baze da vidimo i ovo izmjenjeno
+    } catch (err) { // hvatamo grešku
+        document.getElementById("greskaUpisaUpdate").innerHTML = err?.message
+    }
 }
 
 // TODO: očistiti input polja ako korisnik ne sačuva vozilo, takođe ukloniti grešku
