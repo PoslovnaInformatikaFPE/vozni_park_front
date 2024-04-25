@@ -71,7 +71,7 @@ async function deleteVozilo(voziloId) {
             method: "DELETE"
         })
 
-        console.log("response", response);
+        getVozila()
 
     } catch (err) {
         // ako se desi greška prilikom brisanja odradi ovo ispod
@@ -97,11 +97,15 @@ async function insertVozilo() {
         status: document.getElementById("status").value
     }
 
-
-    console.log("OBJEKAT", vozilo);
-    // console.log("Naš objekat koji šaljemo na backend je:", vozilo)
-
     try {
+        for (let voziloAtribut in vozilo) {
+            // for petlja prolazi kroz svaki atribut objekta vozilo
+            // if provjerava da li je polje prazno
+            if (!vozilo[voziloAtribut]) {
+                throw new Error("Nisu popunjena sva polja!")
+            }
+        }
+
         // pokušavamo da pošaljemo podatke na server i upišemo u bazu pomoću fetcha
         const response = await fetch("http://localhost:4000/vozila", {
             method: "POST", // metoda post je za slanje podataka tj. upis
@@ -115,7 +119,9 @@ async function insertVozilo() {
             throw new Error("Podaci nisu upisani u bazu!") // ako nije bacamo grešku
         }
 
-        getVozila() // ponovo povlačimo sva vozila iz baze da vidimo i ovo novoupisano
+        // forsira refresh stranice
+        location.reload()
+
     } catch (err) { // hvatamo grešku
         document.getElementById("greskaUpisa").innerHTML = err?.message
     }
@@ -175,6 +181,13 @@ const updateVozilo = async () => {
     }
 
     try {
+        for (let voziloAtribut in vozilo) {
+            // for petlja prolazi kroz svaki atribut objekta vozilo
+            // if provjerava da li je polje prazno
+            if (!vozilo[voziloAtribut]) {
+                throw new Error("Nisu popunjena sva polja!")
+            }
+        }
         // pokušavamo da pošaljemo podatke na server i izmjenimo u bazi pomoću fetcha
         const response = await fetch(`http://localhost:4000/vozila/${idSelektovanogVozila}`, {
             method: "PUT", // metoda put je za update podataka 
@@ -188,12 +201,32 @@ const updateVozilo = async () => {
             throw new Error("Podaci nisu imjenjeni u bazi!") // ako nije bacamo grešku
         }
 
-        getVozila() // ponovo povlačimo sva vozila iz baze da vidimo i ovo izmjenjeno
+        location.reload()
+        
     } catch (err) { // hvatamo grešku
         document.getElementById("greskaUpisaUpdate").innerHTML = err?.message
     }
 }
 
-// TODO: očistiti input polja ako korisnik ne sačuva vozilo, takođe ukloniti grešku
-// TODO: validacija na input polja
-// TODO: disable dugmeta na upis
+const clearInputFields = () => {
+    // ova funkcija čisti input polja, odnosno briše dosadašnji input
+    document.getElementById("marka").value = ""
+    document.getElementById("model").value = ""
+    document.getElementById("registracija").value = ""
+    document.getElementById("datumRegistracije").value = ""
+    document.getElementById("godiste").value = ""
+    document.getElementById("gorivo").value = ""
+    document.getElementById("status").value = ""
+}
+
+var myModalEl = document.getElementById('exampleModal') // selektujemo insert modal
+myModalEl.addEventListener('hidden.bs.modal', function (event) {
+    // na zatvaranje insert modala pokrećemo clear inputs funkciju koja čisti input polja
+    clearInputFields()
+    // kod ispod uklana i prikaz greške kod validacije
+    document.getElementById("greskaUpisa").innerHTML = null
+})
+
+
+
+// nakon dugmeta sačuvaj modal se ne zatvara
